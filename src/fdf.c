@@ -16,11 +16,13 @@ void		parallel_fdf(t_env *e)
 {
 	int		x;
 	int		y;
+	int		sq_size;
 	int		x_start;
 	int		y_start;
 
-	x_start = WIN_X / 10;
-	y_start = WIN_Y / 10;
+	sq_size = MIN((WIN_X / (e->map_x * 1.2)), (WIN_Y / (e->map_y * 1.2)));
+	x_start = e->x_shift + (WIN_X - (sq_size * e->map_x)) / 2;
+	y_start = e->y_shift + (WIN_Y - (sq_size * e->map_y)) / 2;
 	e->para_map = malloc(sizeof(t_coord *) * WIN_Y);
 	y = -1;
 	while (++y < e->map_y)
@@ -29,8 +31,10 @@ void		parallel_fdf(t_env *e)
 		x = -1;
 		while (++x < e->map_x)
 		{
-			e->para_map[y][x].x = x_start + (x * SQ_SIZE) + (PARA_CONST * e->map[y][x] * (-e->maximize));
-			e->para_map[y][x].y = y_start + (y * SQ_SIZE) + (PARA_CONST / 2 * e->map[y][x] * (-e->maximize));
+			e->para_map[y][x].x = x_start + (x * sq_size) + (e->para_const *
+				e->map[y][x] * (-e->maximize));
+			e->para_map[y][x].y = y_start + (y * sq_size) +
+			(e->para_const / 2 * e->map[y][x] * (-e->maximize));
 		}
 	}
 }
@@ -39,21 +43,27 @@ void		iso_fdf(t_env *e)
 {
 	int		x;
 	int		y;
+	int		sq_size;
 	int		x_start;
 	int		y_start;
 
-	x_start = (WIN_X / (e->map_x + 2)) + (ISO_C2 * e->map_y * SQ_SIZE);
-	y_start = WIN_Y - (SQ_SIZE * (e->map_y + (3 * (ISO_C1 + ISO_C2))));
+	sq_size = MIN((WIN_X / (e->map_x * 1.2)), (WIN_Y / (e->map_y * 1.2)));
+	x_start = e->x_shift + (WIN_X - ((e->iso_c1 * e->map_x * sq_size) -
+		(e->iso_c2 * e->map_y * sq_size))) / 2;
+	y_start = e->y_shift + (WIN_Y - ((e->iso_c1 / 2 * e->map_x * sq_size) +
+		(e->iso_c2 / 2 * e->map_y * sq_size))) / 2;
 	e->iso_map = malloc(sizeof(t_coord *) * WIN_Y);
 	y = -1;
 	while (++y < e->map_y)
 	{
 		e->iso_map[y] = malloc(sizeof(t_coord) * WIN_X);
 		x = -1;
-		while(++x < e->map_x)
+		while (++x < e->map_x)
 		{
-			e->iso_map[y][x].x = x_start + (ISO_C1 * x * SQ_SIZE) - (ISO_C2 * y * SQ_SIZE);
-			e->iso_map[y][x].y = y_start + (ISO_C1 / 2 * x * SQ_SIZE) + (ISO_C2 / 2 * y * SQ_SIZE) - (e->map[y][x] * e->maximize);
+			e->iso_map[y][x].x = x_start + (e->iso_c1 * x * sq_size) -
+			(e->iso_c2 * y * sq_size);
+			e->iso_map[y][x].y = y_start + (e->iso_c1 / 2 * x * sq_size) +
+			(e->iso_c2 / 2 * y * sq_size) - (e->map[y][x] * e->maximize);
 		}
 	}
 }

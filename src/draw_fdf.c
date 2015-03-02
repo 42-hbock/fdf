@@ -12,6 +12,28 @@
 
 #include "../include/fdf.h"
 
+void		draw_fdf_1(t_env *e, t_coord **map)
+{
+	t_coord a;
+	t_coord	b;
+	int		i;
+	int		j;
+
+	i = -1;
+	while (++i < e->map_x)
+	{
+		j = 0;
+		while (++j < e->map_y)
+		{
+			a.x = map[j - 1][i].x;
+			a.y = map[j - 1][i].y;
+			b.x = map[j][i].x;
+			b.y = map[j][i].y;
+			print_line(a, b, e, 0xFF0000);
+		}
+	}
+}
+
 void		draw_fdf(t_env *e, t_coord **map)
 {
 	t_coord a;
@@ -32,19 +54,7 @@ void		draw_fdf(t_env *e, t_coord **map)
 			print_line(a, b, e, 0xFF0000);
 		}
 	}
-	i = -1;
-	while (++i < e->map_x)
-	{
-		j = 0;
-		while (++j < e->map_y)
-		{
-			a.x = map[j - 1][i].x;
-			a.y = map[j - 1][i].y;
-			b.x = map[j][i].x;
-			b.y = map[j][i].y;
-			print_line(a, b, e, 0xFF0000);
-		}
-	}
+	draw_fdf_1(e, map);
 }
 
 void		reset_window(t_env *e)

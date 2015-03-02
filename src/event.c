@@ -12,17 +12,38 @@
 
 #include "../include/fdf.h"
 
+void		move_map(t_env *e, int key)
+{
+	if (key == 123)
+		map_shift(e, 0);
+	else if (key == 124)
+		map_shift(e, 1);
+	else if (key == 125)
+		map_shift(e, 2);
+	else if (key == 126)
+		map_shift(e, 3);
+}
+
 static int	key_hook(unsigned int key, t_env *e)
 {
-	printf("%d\n", key);
-	if (key == 65307)
+	if (key == 53)
 		exit(0);
-	if (key == 112)
+	if (key == 35)
 		change_pers(e);
-	if (key == 65451)
-		depth_change(e , 0);
-	if (key == 65453)
+	if (key == 69)
+		depth_change(e, 0);
+	if (key == 78)
 		depth_change(e, 1);
+	if (key == 6)
+		const_modif(e, 0);
+	if (key == 7)
+		const_modif(e, 1);
+	if (key == 8)
+		const_modif(e, 2);
+	if (key == 9)
+		const_modif(e, 3);
+	if (key >= 123 && key <= 126)
+		move_map(e, key);
 	return (0);
 }
 

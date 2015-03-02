@@ -34,10 +34,10 @@ void		line_hori(t_env *e, t_coord a, t_coord b, int color)
 	}
 }
 
-void			line_vert(t_env *e, t_coord a, t_coord b, int color)
+void		line_vert(t_env *e, t_coord a, t_coord b, int color)
 {
-	int			y_start;
-	int			y_end;
+	int		y_start;
+	int		y_end;
 
 	if (a.y <= b.y)
 	{

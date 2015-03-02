@@ -16,7 +16,7 @@ int			main(int ac, char **av)
 {
 	char	*cmap;
 	t_env	*e;
-	
+
 	if (ac != 2)
 		return (0);
 	if ((e = env_init(e)) == NULL)

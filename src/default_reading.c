@@ -41,10 +41,9 @@ void		get_mapinfo(char *cmap, t_env *e)
 	}
 	e->map_x = max_len;
 	e->map_y = i;
-	printf("map_y:%d\nmap_x:%d\n", e->map_y, e->map_x);
 	e->map = malloc(sizeof(int *) * e->map_y);
 	i = -1;
-	while (++i < e->map_x)
+	while (++i < e->map_y)
 		e->map[i] = malloc(sizeof(int) * e->map_x);
 }
 
@@ -56,7 +55,8 @@ char		*default_reading(char *file, t_env *e)
 	char	*c_map;
 
 	buf[BUFF] = 0;
-	if (((fd = open(file, O_RDONLY)) == -1) || ((c_map = init_string(c_map)) == NULL))
+	if (((fd = open(file, O_RDONLY)) == -1) ||
+		((c_map = init_string(c_map)) == NULL))
 		exit(0);
 	while ((nread = read(fd, buf, BUFF)) > 0)
 	{
@@ -70,7 +70,7 @@ char		*default_reading(char *file, t_env *e)
 		exit(0);
 	}
 	get_mapinfo(c_map, e);
-	return(c_map);
+	return (c_map);
 }
 
 void		create_int_map(char *cmap, t_env *e)
@@ -81,9 +81,6 @@ void		create_int_map(char *cmap, t_env *e)
 	int		j;
 
 	tab_line = ft_strsplit(cmap, '\n');
-	i = -1;
-	while(tab_line[++i])
-		printf("i:%d\n%s\n", i, tab_line[i]);
 	i = -1;
 	while (tab_line[++i])
 	{
@@ -101,6 +98,5 @@ void		create_int_map(char *cmap, t_env *e)
 			else
 				e->map[i][j] = 0;
 		}
-		printf("ok\n");
 	}
 }
